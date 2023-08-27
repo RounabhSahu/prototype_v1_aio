@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Book from './components/Book';
+import Hero from './components/Hero';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
+import Carousel from "./components/Carousel";
+import Home from "./components/Home";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import { ThemeProvider } from "@material-tailwind/react";
+export default function App() {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    return (
+
+        <Router>
+            <Nav/>
+            <Routes>
+                <Route path={'/'} element={<Home />} />
+            </Routes>
+            <Footer/>
+        </Router>
+    );
 }
-
-export default App;
