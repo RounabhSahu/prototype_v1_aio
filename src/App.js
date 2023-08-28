@@ -1,39 +1,78 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState, useRef } from 'react';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
-
+import Home from "./components/Home";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AccountBox from "./components/components/accountBox";
 import styled from "styled-components";
-// import { ThemeProvider } from "@material-tailwind/react";
+import AccountBox from "./components/components/accountBox";
+
+const AppContainer = styled.div`
+  width: fit-content;
+  
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 export default function App() {
-    const HomePage = () => { // Rename the custom component
-        const AppContainer = styled.div`
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        `;
+    const [isAccountBoxOpen, setIsAccountBoxOpen] = useState(true);
+    const appContainerRef = useRef(null);
 
-        return (
-            <Router>
-                {/*<div className=''>*/}
-                {/*    <AppContainer>*/}
-                {/*        <AccountBox />*/}
-                {/*    </AppContainer>*/}
-                {/*</div>*/}
-                <Nav/>
+    const toggleAccountBox = () => {
+        console.log('account')
+        setTimeout(()=>{
+            setIsAccountBoxOpen(!isAccountBoxOpen);
+        },500)
+    };
 
-                <Routes>
-                    <Route path={'/'} element={<HomePage />} /> {/* Use the renamed component */}
-                </Routes>
-                <Footer/>
-            </Router>
-        );
-    }
+    useEffect(() => {
+        // Disable/enable scrolling when the account box is open/closed
+        if (isAccountBoxOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
 
-    // ...
+        // Add a click event listener to the document
+        const handleClickOutside = (event) => {
+            if (appContainerRef.current && !appContainerRef.current.contains(event.target)) {
+                // Click occurred outside the AppContainer, close the account box
+                toggleAccountBox();
+            }
+        };
+
+        if (isAccountBoxOpen) {
+            document.addEventListener('click', handleClickOutside);
+        } else {
+            document.removeEventListener('click', handleClickOutside);
+        }
+
+        return () => {
+            // Clean up: Re-enable scrolling and remove the click event listener
+            document.body.style.overflow = 'auto';
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [isAccountBoxOpen]);
+
+    return (
+        <Router>
+            <Nav toggleAccountBox={toggleAccountBox}/>
+            {isAccountBoxOpen &&
+                <div className='bg-black/50 h-screen w-full absolute top-0 z-20 flex justify-center items-center' >
+                    <div ref={appContainerRef} className='flex justify-center items-center w-fit scale-125' >
+                        <AppContainer>
+                            <AccountBox />
+                        </AppContainer>
+                    </div>
+                </div>
+            }
+
+            <Routes>
+                <Route path={'/'} element={<Home  toggleSignup={toggleAccountBox}/>} />
+            </Routes>
+            <Footer/>
+        </Router>
+    );
 }

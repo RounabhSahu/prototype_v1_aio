@@ -6,19 +6,20 @@ import Carousel from "./Carousel";
 import CountryCarousel from "./CountryCarousel";
 import styled from "styled-components";
 import AccountBox from "./components/accountBox/index"
-const Home = () => {
-    const AppContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+const Home = ({toggleSignup}) => {
+//     const AppContainer = styled.div`
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+// `;
     return (
         <div className='mt-20'>
+
             <Carousel/>
-            <Steps/>
+            <Steps  toggleSignup={toggleSignup}/>
             <Hero/>
             <CountryCarousel/>
             <Book/>

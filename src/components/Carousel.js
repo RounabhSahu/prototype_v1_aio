@@ -126,7 +126,7 @@ const Carousel = () => {
     const next=()=> {
         let inter=setInterval(() => {
             slideToNextItem()
-        }, 1000)
+        }, 5000)
         return inter
     }
     useEffect(() => {

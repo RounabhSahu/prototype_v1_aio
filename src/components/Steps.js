@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-const Steps = () => {
+const Steps = ({toggleSignup}) => {
     const arr = [
         { num: '1.', desc: 'Document Collection' ,details:'This stage involves gathering essential documents required for the consultation process. These documents include Passport, Aadhar card, PAN card, Passport size photo, Digital Signature, and Scholarship Result.'},
         { num: '2.', desc: 'Language Proficiency Tests' ,details:'In this stage, you\'ll focus on language proficiency tests such as GRE, IELTS, TOEFL, and Duolingo. Provide information about the credentials needed for each test.' },
@@ -16,6 +16,10 @@ const Steps = () => {
             setCurr(-1)
         else
             setCurr(index)
+    }
+    const handleToggle=()=>{
+        toggleSignup()
+        window.scrollTo(0, 0);
     }
     return (
         <div className='bg-cyan-200 w-full  steps-bg' id='Contact'>
@@ -41,7 +45,7 @@ const Steps = () => {
                         );
                     })}
                     <div className='text-2xl font-bold font-sans text-blue my-2 text-center basis-full '>
-                        <div className='border-2 py-2 px-4 border-blue mx-auto w-fit rounded hover:border-black hover:bg-amber-400 hover:text-slate-900 cursor-pointer'>Know More</div>
+                        <div className='border-2 py-2 px-4 border-blue mx-auto w-fit rounded hover:border-black hover:bg-amber-400 hover:text-slate-900 cursor-pointer' onClick={handleToggle} >Know More</div>
                     </div>
                 </div>
             </div>

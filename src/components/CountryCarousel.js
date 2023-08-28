@@ -49,7 +49,7 @@ const Carousel = () => {
                 renderItem: (
                     <div
                         className={`grid relative aspect-[1] w-full place-items-center text-2xl text-white transition-all duration-700 rounded drop-shadow-xl ${currentSlide === item.id
-                            ? 'z-10 scale-150 bg-yellow-600'
+                            ? ' z-[5] scale-150 bg-yellow-600'
                             : 'bg-violet-500 md:scale-90 scale-[0.4] rounded-lg'
                         }`}
                         style={{ backgroundImage: `url(${item.url})`, backgroundSize: 'cover',backgroundRepeat:"no-repeat", }}

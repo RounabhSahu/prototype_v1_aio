@@ -2,7 +2,7 @@ import logo from './logo.png'
 
 import { Dropdown, Navbar } from 'flowbite-react';
 
-export default function NavbarWithDropdown() {
+export default function Nav({toggleAccountBox}) {
     return (
         <div className='sticky top-0 z-10 w-full bg-plat pb-2 pt-2 backdrop-blur'>
             <Navbar
@@ -58,8 +58,8 @@ export default function NavbarWithDropdown() {
                     <Navbar.Link href="#" className='text-xl'>
                         Pricing
                     </Navbar.Link>
-                    <Navbar.Link href="#" className='text-xl'>
-                        Contact
+                    <Navbar.Link href="#" className='text-xl' onClick={toggleAccountBox}>
+                        <div onClick={toggleAccountBox}>SignIn</div>
                     </Navbar.Link>
                 </Navbar.Collapse>
             </Navbar>
