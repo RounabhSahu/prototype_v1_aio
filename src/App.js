@@ -17,7 +17,7 @@ const AppContainer = styled.div`
 `;
 
 export default function App() {
-    const [isAccountBoxOpen, setIsAccountBoxOpen] = useState(true);
+    const [isAccountBoxOpen, setIsAccountBoxOpen] = useState(false);
     const appContainerRef = useRef(null);
 
     const toggleAccountBox = () => {
