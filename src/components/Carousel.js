@@ -1,49 +1,189 @@
-import React from 'react';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/react-splide/css';
+import React, {useEffect, useRef, useState} from 'react'
+import { useSpringCarousel } from 'react-spring-carousel'
 
-const CarouselSlider = () => {
-    const arr = [
+const Carousel = () => {
+    const mockItems = [
         {
-            url:"https://www.studying-in-germany.org/wp-content/uploads/2015/05/Study-Abroad-in-Germany.jpg",
-            title:"",
-            desc:""},
+            id: 'item-1',
+            title: 'Make your plans Ahead',
+            url:"https://img.freepik.com/premium-photo/illustration-opened-book-with-famous-monuments_250014-514.jpg?w=826",
+            desc:"Studying abroad may not look easy but early planning and investment makes it much smoother. We are here to make the the process simpler by providing everything at one place.",
+            style:""
+        },
         {
-            url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAUoVIThcWrgWgJU8z-aDNu6HhrrEAHVhCOg&usqp=CAU",
-            title:"",
-            desc:""},
+            id: 'item-2',
+            title: 'Still Confused ?',
+            url:"https://img.freepik.com/free-photo/explorer-with-map_1098-15383.jpg?w=1380&t=st=1693252446~exp=1693253046~hmac=4f938b96e0053733912f65c806ad3d7a373674ec54abe1d90d1eea12fa9ac8d8",
+            desc:"Worry not we got your back ! You focus on studies, and let us handle the process. Don't let the messy things make a mess out of you.",
+            style:""
+        },
         {
-            url:"data:image/jpeg;base64,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",
-            title:"",
-            desc:""}]
-    return (
-        <div className='md:w-1/2 mx-auto md:h-1/2 border-4 rounded overflow-hidden border-slate-900'>
-            <Splide
-                options={ {
-                    rewind:true,
-                    type    : 'loop',
-                    perPage: 1,
-                    autoplay: 'pause',
-                    intersection: {
-                        inView: {
-                            autoplay: true,
-                        },
-                    },
-                } }
-                aria-label="My Favorite Images"
-            >
-                {arr.map((item,index)=>{
-                    return(<SplideSlide >
-                        <img src={item.url} alt="Image 1" aria-labelledby={item.title} className='h-full w-full'/>
-                    </SplideSlide>)
-                })}
-                <div className="splide__progress">
-                    <div className="splide__progress__bar">
+            id: 'item-3',
+            title: 'Find a Program',
+            url:"https://img.freepik.com/free-photo/gratuated-colleagues-hugging_23-2148522166.jpg?w=1380&t=st=1693252781~exp=1693253381~hmac=2411b83d9534c5ee4ccfb5f0ba5344c0a8dd92876c098355c5937b400fefbf2e",
+            desc:"All In One manages more than 200 programs with participants from more than\n" +
+                "180 countries. In the last year alone, more than 29,000 people\n" +
+                "participated in HE managed programs.",
+            style:""
+        },
+        {
+            id: 'item-4',
+            title: 'Grow beyond, Fly farther',
+            url:"https://img.freepik.com/free-photo/silhouette-confident-businesspeople_1098-1768.jpg?w=1380&t=st=1693252541~exp=1693253141~hmac=9b96f61fdc0d409b5457dae99885456c688e452dfeffd8104c391eb042b45e6f",
+            desc:"Don't limit your skills with meager satisfaction. Don't stop yourself from a leaving a trail behind for others.",
+            style:""
+        },
+
+        // {
+        //     id: 'item-3',
+        //     title: 'slide 3',
+        //     url:"",
+        //     desc:"",
+        //     style:""
+        // },
+        // {
+        //     id: 'item-3',
+        //     title: 'slide 3',
+        //     url:"",
+        //     desc:"",
+        //     style:""
+        // }
+    ]
+    const isSmallerThanTablet=()=>{
+        return window.innerWidth < 1300; // Adjust the breakpoint as needed
+    }
+    const [currentSlide, setCurrentSlide] = useState(mockItems[0].id)
+    const [inView, setInView] = useState(false);
+
+    useEffect(() => {
+        // Calculate the maximum height among all slides after rendering
+        const maxSlideHeight = Math.max(
+            ...Object.values(slideRefs.current).map(ref => ref.offsetHeight)
+        );
+
+        // Set the same fixed height for all slides
+        Object.values(slideRefs.current).forEach(ref => {
+            if(isSmallerThanTablet()){
+                ref.style.height = `400px`;
+            }
+            else{
+                ref.style.height = `350px`;
+                ref.style.width = `800px`;
+            }
+        });
+    }, [currentSlide]);
+    const slideRefs = useRef({});
+    const {
+        carouselFragment,
+        slideToPrevItem, // go back to previous slide
+        slideToNextItem, // move to next slide
+        useListenToCustomEvent //custom hook to listen event when the slide changes
+    } = useSpringCarousel({
+        itemsPerSlide: isSmallerThanTablet()? 1 : 3, // number of slides per view
+        withLoop: true, // will loop
+        initialStartingPosition: 'center', // the active slide will be at the center
+        gutter: 24, // to add the space between slides
+        items: mockItems.map(item => {
+            return {
+                ...item,
+                renderItem: (
+                    <div
+                        ref={el => (slideRefs.current[item.id] = el)} // Store a ref to the slide
+                        id={item.id} // Assign an ID to each slide
+                        className={`w-full place-items-center text-2xl text-white transition-all duration-700 rounded drop-shadow-2xl bg-gradient-to-b from-transparent to-slate-950 ${
+                            currentSlide === item.id
+                                ? 'z-10 md:scale-150 bg-yellow-600 md:scale-x-[2]'
+                                : ' scale-90'
+                        }`}
+                        style={{ backgroundImage: `url(${item.url})`, backgroundSize: 'cover',backgroundRepeat:"no-repeat", }}
+                        // No need to set a fixed height here
+                    >
+                        <div
+                            className={`absolute inset-0 bg-black transition-all duration-500 ${currentSlide === item.id?'opacity-0':'opacity-70'}`}
+                            style={{ height: '100%' }}
+                        ></div>
+
+                        <div
+                            className={`relative w-full h-full flex flex-col justify-end items-center transition-all duration-700 bg-gradient-to-b from-transparent via-transparent to-black ${
+                                currentSlide === item.id ? '' : 'hidden'
+                            }`}
+                            // style={{ backgroundImage: `url(${item.url})`, backgroundSize: 'cover',backgroundRepeat:"no-repeat", }}
+                        >
+                            <div className='text-2xl font-volkhorn--sans'>{item.title}</div>
+                            <div className='text-sm px-8 py-2 text-center font-josefin'>{item.desc}</div>
+                        </div>
                     </div>
-                </div>
-            </Splide>
-        </div>
-    );
-};
+                )
+            }
+        })
+    })
 
-export default CarouselSlider;
+    useListenToCustomEvent((event) => {
+        if (event.eventName === 'onSlideStartChange') {
+            setCurrentSlide(event?.nextItem?.id)
+        }
+    })
+    const next=()=> {
+        let inter=setInterval(() => {
+            slideToNextItem()
+        }, 1000)
+        return inter
+    }
+    useEffect(() => {
+        console.log(inView)
+        if(!inView){
+            var a=next();
+
+        }
+        return ()=> clearInterval(a)
+    }, [inView]);
+
+
+    if(!isSmallerThanTablet()){
+        console.log('small size')
+        return (
+            <div className="py-20 relative w-full h-full" onMouseEnter={()=>setInView(true)} onMouseLeave={()=>setInView(false)}>
+                <button onClick={slideToPrevItem} className="absolute top-1/2 -translate-y-1/2 -translate-x-full left-[10%]">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+                <div className="mx-auto w-[80%] overflow-x-clip py-[4%] relative">
+                    {carouselFragment}
+                </div>
+                <button onClick={slideToNextItem} className="absolute top-1/2 -translate-y-1/2 translate-x-full right-[10%]">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+            </div>
+        )}
+    else
+    {
+        return (
+            <div className="relative flex flex-col w-full" onMouseEnter={() => setInView(true)}
+                 onMouseLeave={() => setInView(false)}>
+
+                <div className="mx-auto w-full md:w-[80%] overflow-x-clip py-[4%] relative drop-shadow-2xl">
+                    {carouselFragment}
+                </div>
+                <div className='w-full flex flex-row justify-around h-fit pt-8'>
+                    <button onClick={slideToPrevItem} className="scale-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
+                             stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                        </svg>
+                    </button>
+                    <button onClick={slideToNextItem} className="scale-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
+                             stroke="currentColor" className="w-6 h-6 shadow drop-shadow-2xl">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        )
+    }
+}
+
+export default Carousel

@@ -11,7 +11,7 @@ const Hero = () => {
     return (
         <div className="w-full md:h-1/2 md:w-1/2 mx-auto py-4">
             <div className="flex flex-row flex-wrap justify-evenly items-center w-full">
-                <div className='text-6xl font-extrabold font-sans text-sky-800 my-2 text-center basis-full'>OUR JOURNEY</div>
+                <div className='text-6xl font-extrabold  text-sky-800 my-2 text-center basis-full font-josefin'>OUR JOURNEY</div>
                 {arr.map((item, index) => {
                     return (
                         <div

@@ -22,7 +22,7 @@ const Book = () => {
     ));
 
 
-    return (<div className=' w-full text-center text-black relative'>
+    return (<div className=' w-full text-center text-black relative' style={{ backgroundImage: `url(https://img.freepik.com/premium-vector/airplane-line-path-route-start-point-dash-line-trace_166001-133.jpg?w=1480)`, backgroundSize: 'cover',backgroundRepeat:"no-repeat",backgroundColor:"rgb(22,55,95)",backgroundBlendMode:'screen' }}>
         <div className="min-w-screen min-h-screen flex items-center justify-center sm:px-5 py-5 ">
             <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden border-x-2 border-b-4 border-slate-700 border-t-0" style={{ "maxWidth": "1000px" }}>
                 <div className="md:flex w-full">

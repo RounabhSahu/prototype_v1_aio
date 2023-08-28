@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,500;0,600;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,500;0,600;1,300&family=Vollkorn:wght@400;500;600&display=swap');
+.font-josefin{
+  font-family: 'Josefin Sans', sans-serif;
+}
+.font-volkhorn--sans{
+  font-family: 'Josefin Sans', sans-serif;
+}
+.font-volkhorn--serif{
+  font-family: 'Vollkorn', serif;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -18,3 +30,17 @@ code {
 .wrapper{
   @apply w-full border border-black  px-0 -ml-4 mb-1;
 }
+.steps-bg {
+    background-image: url('https://img.freepik.com/free-vector/worldmap-background-design_1127-2318.jpg?w=1380&t=st=1693237559~exp=1693238159~hmac=5bd99e7cfa718ecba904aef4c55a7b5c69768decb1154bd4f4a83fe55d07ac56');
+  background-color: rgb(0, 155, 174); /* Cyan-400 color code */
+
+  background-size: cover; /* Ensure the image covers the entire element */
+  background-repeat: no-repeat; /* Prevent image repetition */
+  background-blend-mode: screen; /* Blend the image with the background color */
+}
+
+/* Your existing CSS styles */
+/* ... */
+
+/* Add a span with a background blur effect */
+
