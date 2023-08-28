@@ -60,8 +60,8 @@ export default function App() {
         <Router>
             <Nav toggleAccountBox={toggleAccountBox}/>
             {isAccountBoxOpen &&
-                <div className='bg-black/50 h-screen w-full absolute top-0 z-20 flex justify-center items-center' >
-                    <div ref={appContainerRef} className='flex justify-center items-center w-fit scale-125' >
+                <div className='bg-black/50 h-screen w-full absolute top-0 z-20 flex justify-center items-center backdrop-blur-lg' >
+                    <div ref={appContainerRef} className='flex justify-center items-center w-fit scale-125 ' >
                         <AppContainer>
                             <AccountBox />
                         </AppContainer>
